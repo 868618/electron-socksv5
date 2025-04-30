@@ -1,6 +1,6 @@
 import { app, shell, BrowserWindow, ipcMain } from 'electron'
 import { join } from 'path'
-import { electronApp, optimizer, is } from '@electron-toolkit/utils'
+import { electronApp, optimizer, is, platform } from '@electron-toolkit/utils'
 import icon from '@resources/icon.png?asset'
 
 function createWindow(): BrowserWindow {
@@ -8,9 +8,12 @@ function createWindow(): BrowserWindow {
   const mainWindow = new BrowserWindow({
     width: 400,
     height: 100,
+
+    minWidth: 300,
+    maxWidth: 500,
     show: false,
     autoHideMenuBar: true,
-    ...(process.platform === 'linux' ? { icon } : {}),
+    ...(platform.isLinux ? { icon } : {}),
     webPreferences: {
       preload: join(__dirname, '../preload/index.js'),
       sandbox: false
@@ -30,8 +33,6 @@ function createWindow(): BrowserWindow {
     shell.openExternal(details.url)
     return { action: 'deny' }
   })
-
-  mainWindow.webContents.openDevTools({ mode: 'detach' })
 
   // HMR for renderer base on electron-vite cli.
   // Load the remote URL for development or the local html file for production.
@@ -75,7 +76,41 @@ app
       // dock icon is clicked and there are no other windows open.
       if (BrowserWindow.getAllWindows().length === 0) createWindow()
     })
+
+    return mainWindow
   })
+
+  /**
+   * 单实例模式
+   */
+  .then((mainWindow) => {
+    const gotTheLock = app.requestSingleInstanceLock()
+
+    if (!gotTheLock) {
+      // 已存在实例，退出当前
+      app.quit()
+    }
+
+    app.on('second-instance', () => {
+      if (mainWindow) {
+        // 恢复最小化的窗口
+        if (mainWindow.isMinimized()) mainWindow.restore()
+        // 显示主窗口（如果隐藏）
+        mainWindow.show()
+        // 聚焦窗口
+        mainWindow.focus()
+      }
+    })
+
+    return mainWindow
+  })
+  .then((mainWindow) => {
+    is.dev && mainWindow.webContents.openDevTools({ mode: 'detach' })
+  })
+
+  /**
+   * 初始化主进程自定义逻辑
+   */
   .then(() => import('./main.handle'))
 
 // Quit when all windows are closed, except on macOS. There, it's common

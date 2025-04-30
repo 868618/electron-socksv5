@@ -1,10 +1,4 @@
 <template>
-  <!-- <div class="newowrk">network</div> -->
-
-  <!-- <div class="h-[40px] w-[100px] bg-red rounded-full flex justify-center items-center" @click="test">
-    network
-  </div> -->
-
   <section class="flex h-screen w-screen items-center">
     <p
       class="text-3 text-teal-400 font-bold mx-4 rounded-full bg-sky-950 inline-grid h-[40px] w-[100px] cursor-pointer select-none shadow-lg place-items-center hover:shadow-cyan-600/50"
@@ -13,9 +7,13 @@
       {{ text }}
     </p>
 
-    <div class="inline-flex flex-1 flex-col h-full items-stretch justify-center">
-      <div v-for="item in list" :key="item.port" class="text-green-300 grid select-text">
-        代理地址 {{ item.address }}:{{ item.port }}
+    <div class="inline-flex flex-1 flex-col gap-y-[5px] h-full items-stretch justify-center">
+      <div
+        v-for="item in list"
+        :key="item.port"
+        class="text-green-300 underline underline-green-300 underline-offset-5 decoration-dotted grid select-text"
+      >
+        {{ item.address }}:{{ item.port }}
       </div>
     </div>
   </section>
