@@ -21,8 +21,8 @@ function createWindow(): BrowserWindow {
 
     resizable: true,
 
-    // titleBarStyle: 'customButtonsOnHover'
-    titleBarStyle: 'hidden'
+    titleBarStyle: 'customButtonsOnHover'
+    // titleBarStyle: 'hidden'
   })
 
   mainWindow.on('ready-to-show', () => {

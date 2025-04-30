@@ -1,10 +1,12 @@
 <template>
   <section class="flex h-screen w-screen items-center">
     <p
-      class="text-3 text-teal-400 font-bold mx-4 rounded-full bg-sky-950 inline-grid h-[40px] w-[100px] cursor-pointer select-none shadow-lg place-items-center hover:shadow-cyan-600/50"
+      class="text-[25px] text-green-200 mx-4 px-[10px] rounded-full bg-sky-800 inline-flex gap-x-2 h-[40px] cursor-pointer select-none items-center justify-center"
       @click="handleClick"
     >
-      {{ text }}
+      <i v-if="!list.length" class="i-subway:power-batton"></i>
+      <i v-else class="i-line-md:gauge-loop"></i>
+      <span class="text-[12px]">{{ text }}</span>
     </p>
 
     <div class="inline-flex flex-1 flex-col gap-y-[5px] h-full items-stretch justify-center">
@@ -25,7 +27,7 @@ import { IpcEvents } from '@src/ipc-events'
 import { type ProxyServer } from '@src/ipc-events'
 import { ref, watch } from 'vue'
 
-const text = ref<'启动服务' | '重启服务'>('启动服务')
+const text = ref<'启动服务' | '运行中'>('启动服务')
 
 const emitter = new IpcEmitter<IpcEvents>()
 
@@ -43,7 +45,7 @@ watch(
   () => list.value,
   (newValue) => {
     if (newValue.length) {
-      text.value = '重启服务'
+      text.value = '运行中'
     } else {
       text.value = '启动服务'
     }
