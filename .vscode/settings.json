@@ -12,5 +12,7 @@
 
   "editor.quickSuggestions": {
     "strings": "on"
-  }
+  },
+
+  "tailwindCSS.colorDecorators": true
 }

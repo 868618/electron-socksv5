@@ -18,7 +18,7 @@
         :key="item.port"
         class="text-green-300 underline underline-green-300 underline-offset-5 decoration-dotted grid select-text"
       >
-        socks5://{{ item.address }}:{{ item.port }}
+        socks5://{{ item.name }}:{{ item.port }}
       </div>
     </div>
   </section>

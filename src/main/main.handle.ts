@@ -10,14 +10,13 @@ const ipc = new IpcListener<IpcEvents>()
 
 const proxyServerStore: (ProxyServer & { server: unknown })[] = []
 
-const getNetworkInterfaces = (): os.NetworkInterfaceInfo[] => {
-  const networks = [...Object.values(os.networkInterfaces())]
+const getNetworkInterfaces = () => {
+  const networks = Object.entries(os.networkInterfaces())
+    .map(([k, v]) => v?.map((i) => ({ ...i, name: k })))
     .flat()
-    .filter(Boolean)
-    .filter((i) => i?.family === 'IPv4')
-    .filter((i) => i?.address !== '127.0.0.1')
+    .filter((i) => i && i.family === 'IPv4' && i.address !== '127.0.0.1')
 
-  return networks
+  return networks as (os.NetworkInterfaceInfoIPv4 & { name: string })[]
 }
 
 ipc.handle('getNetworkInterfaces', () => getNetworkInterfaces())
@@ -35,12 +34,13 @@ const creareSocksV5ProxyServer = async () => {
       accept()
     })
 
-    const { address } = network
+    const { address, name } = network
 
     srv.listen(port, address, function () {
       proxyServerStore.push({
         address,
         port,
+        name,
         server: srv
       })
 
@@ -54,7 +54,7 @@ const creareSocksV5ProxyServer = async () => {
 
   // console.log('proxyServerStore: ---', proxyServerStore)
 
-  return proxyServerStore.map(({ port, address }) => ({ port, address }))
+  return proxyServerStore.map(({ port, address, name }) => ({ port, address, name }))
 }
 
 ipc.handle('creareSocksV5ProxyServer', creareSocksV5ProxyServer)

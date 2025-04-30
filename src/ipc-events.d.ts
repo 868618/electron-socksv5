@@ -1,4 +1,4 @@
-export type ProxyServer = { address: string; port: number }
+export type ProxyServer = { address: string; port: number; name: string }
 
 // Main process ipc events
 export type IpcEvents =

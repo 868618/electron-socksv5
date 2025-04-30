@@ -10,7 +10,7 @@ function createWindow(): BrowserWindow {
     height: 100,
 
     minWidth: 350,
-    maxWidth: 350,
+    // maxWidth: 350,
     minHeight: 100,
     show: false,
     autoHideMenuBar: true,
