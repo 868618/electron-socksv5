@@ -14,11 +14,7 @@
     </p>
 
     <div class="inline-flex flex-1 flex-col h-full items-stretch justify-center">
-      <div
-        v-for="item in list"
-        :key="item.port"
-        class="text-green-300 grid select-text place-items-center"
-      >
+      <div v-for="item in list" :key="item.port" class="text-green-300 grid select-text">
         代理地址 {{ item.address }}:{{ item.port }}
       </div>
     </div>

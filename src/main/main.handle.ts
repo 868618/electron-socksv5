@@ -25,12 +25,11 @@ ipc.handle('getNetworkInterfaces', () => getNetworkInterfaces())
 
 const creareSocksV5ProxyServer = async () => {
   const networks = getNetworkInterfaces()
-  console.log('networks: ', networks)
+
   for (const network of networks) {
     const { resolve, promise } = Promise.withResolvers()
 
     const port = await getPort()
-    console.log('port: ', port)
 
     const srv = socks.createServer(function (info, accept) {
       console.log('info: ', info)

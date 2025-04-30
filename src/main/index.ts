@@ -16,10 +16,10 @@ function createWindow(): BrowserWindow {
       sandbox: false
     },
 
-    resizable: false,
+    resizable: true,
 
-    titleBarStyle: 'customButtonsOnHover'
-    // titleBarStyle: 'hidden'
+    // titleBarStyle: 'customButtonsOnHover'
+    titleBarStyle: 'hidden'
   })
 
   mainWindow.on('ready-to-show', () => {
@@ -31,7 +31,7 @@ function createWindow(): BrowserWindow {
     return { action: 'deny' }
   })
 
-  mainWindow.webContents.openDevTools()
+  mainWindow.webContents.openDevTools({ mode: 'detach' })
 
   // HMR for renderer base on electron-vite cli.
   // Load the remote URL for development or the local html file for production.
@@ -57,7 +57,7 @@ app
     // and ignore CommandOrControl + R in production.
     // see https://github.com/alex8088/electron-toolkit/tree/master/packages/utils
     app.on('browser-window-created', (_, window) => {
-      optimizer.watchWindowShortcuts(window)
+      optimizer.watchWindowShortcuts(window, { zoom: true, escToCloseWindow: true })
     })
 
     // IPC test
