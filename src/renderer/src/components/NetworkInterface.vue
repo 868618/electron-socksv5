@@ -1,7 +1,8 @@
 <template>
   <section class="flex h-screen w-screen items-center">
     <div
-      class="text-[25px] text-green-200 mx-4 px-[10px] rounded-full inline-flex gap-x-2 h-[40px] cursor-pointer select-none items-center justify-center"
+      class="text-[25px] text-green-200 mx-4 px-[10px] rounded-full inline-flex gap-x-2 h-[40px] select-none items-center justify-center"
+      :class="{ 'cursor-pointer': !list.length }"
       @click="handleClick"
     >
       <i v-if="!list.length" class="i-subway:power-batton text-red-700"></i>

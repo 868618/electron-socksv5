@@ -5,7 +5,6 @@ import socks from 'socksv5'
 import { ProxyServer } from '@src/ipc-events'
 import { detect } from 'detect-port'
 import getPort from 'get-port'
-// import chalk from 'chalk'
 
 const ipc = new IpcListener<IpcEvents>()
 
