@@ -6,11 +6,12 @@ import icon from '@resources/icon.png?asset'
 function createWindow(): BrowserWindow {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
-    width: 400,
+    width: 350,
     height: 100,
 
-    minWidth: 300,
-    maxWidth: 500,
+    minWidth: 350,
+    maxWidth: 350,
+    minHeight: 100,
     show: false,
     autoHideMenuBar: true,
     ...(platform.isLinux ? { icon } : {}),
@@ -21,7 +22,8 @@ function createWindow(): BrowserWindow {
 
     resizable: true,
 
-    titleBarStyle: 'customButtonsOnHover'
+    // titleBarStyle: 'customButtonsOnHover'
+    titleBarStyle: platform.isMacOS ? 'customButtonsOnHover' : 'hidden'
     // titleBarStyle: 'hidden'
   })
 
