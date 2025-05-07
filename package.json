@@ -1,5 +1,5 @@
 {
-  "name": "electron-socksv5",
+  "name": "socksv5",
   "version": "1.0.0",
   "description": "学道代理",
   "main": "./out/main/index.js",
