@@ -1,7 +1,8 @@
-import { app, shell, BrowserWindow, ipcMain } from 'electron'
+import { app, shell, BrowserWindow, ipcMain, Tray, Menu } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is, platform } from '@electron-toolkit/utils'
 import icon from '@resources/icon.png?asset'
+import localshortcut from 'electron-localshortcut'
 
 function createWindow(): BrowserWindow {
   // Create the browser window.
@@ -47,10 +48,13 @@ function createWindow(): BrowserWindow {
   return mainWindow
 }
 
+let isRealQuit: boolean = false
+
 app.commandLine.appendSwitch('lang', 'zh-CN')
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
+
 app
   .whenReady()
   .then(() => {
@@ -80,13 +84,24 @@ app
       if (BrowserWindow.getAllWindows().length === 0) createWindow()
     })
 
+    mainWindow.on('close', (event) => {
+      !isRealQuit && event.preventDefault()
+
+      mainWindow.hide()
+    })
+
     return mainWindow
   })
 
-  /**
-   * 单实例模式
-   */
   .then((mainWindow) => {
+    /**快捷键 */
+    localshortcut.register(mainWindow, 'Ctrl+w', () => {
+      mainWindow.hide()
+    })
+
+    /**
+     * 单实例模式
+     */
     const gotTheLock = app.requestSingleInstanceLock()
 
     if (!gotTheLock) {
@@ -109,6 +124,30 @@ app
   })
   .then((mainWindow) => {
     is.dev && mainWindow.webContents.openDevTools({ mode: 'detach' })
+
+    const tray = new Tray(icon)
+
+    const contextMenu = Menu.buildFromTemplate([
+      // {
+      //   label: '关于',
+      //   role: 'about'
+      // },
+      // { type: 'separator' },
+      {
+        label: '退出',
+        // role: 'quit',
+        click() {
+          isRealQuit = true
+          app.quit()
+        }
+      }
+    ])
+
+    tray.setContextMenu(contextMenu)
+
+    tray.addListener('click', () => {
+      mainWindow.show()
+    })
   })
 
   /**
