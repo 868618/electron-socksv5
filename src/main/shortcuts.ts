@@ -11,11 +11,11 @@ import { BrowserWindow } from 'electron'
  * - Ctrl+y 切换控制台
  */
 export const registerShortcut = (win: BrowserWindow) => {
-  localshortcut.register(win, 'Ctrl+w', () => {
+  localshortcut.register(win, ['Ctrl+W', 'Esc'], () => {
     win.hide()
   })
 
-  localshortcut.register(win, 'Ctrl+y', () => {
+  localshortcut.register(win, 'Ctrl+Y', () => {
     win.webContents.toggleDevTools()
   })
 }
