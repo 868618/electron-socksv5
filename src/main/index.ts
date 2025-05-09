@@ -1,8 +1,10 @@
-import { app, shell, BrowserWindow, ipcMain, Tray, Menu } from 'electron'
+import { app, shell, BrowserWindow } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is, platform } from '@electron-toolkit/utils'
 import icon from '@resources/icon.png?asset'
-import localshortcut from 'electron-localshortcut'
+
+import { registerTray } from './tray'
+import { registerShortcut } from './shortcuts'
 
 function createWindow(): BrowserWindow {
   // Create the browser window.
@@ -48,7 +50,7 @@ function createWindow(): BrowserWindow {
   return mainWindow
 }
 
-let isRealQuit: boolean = false
+// let isRealQuit: boolean = false
 
 app.commandLine.appendSwitch('lang', 'zh-CN')
 // This method will be called when Electron has finished
@@ -68,9 +70,6 @@ app
       optimizer.watchWindowShortcuts(window, { zoom: true, escToCloseWindow: true })
     })
 
-    // IPC test
-    ipcMain.on('ping', () => console.log('pong'))
-
     const mainWindow = createWindow()
 
     // Test active push message to Renderer-process.
@@ -85,7 +84,9 @@ app
     })
 
     mainWindow.on('close', (event) => {
-      !isRealQuit && event.preventDefault()
+      console.log('globalThis.VITE_PUB_IS_REAL_QUIT: ', globalThis.VITE_PUB_IS_REAL_QUIT)
+
+      !globalThis.VITE_PUB_IS_REAL_QUIT && event.preventDefault()
 
       mainWindow.hide()
     })
@@ -94,11 +95,11 @@ app
   })
 
   .then((mainWindow) => {
-    /**快捷键 */
-    localshortcut.register(mainWindow, 'Ctrl+w', () => {
-      mainWindow.hide()
-    })
+    /**系统托盘 */
+    registerTray(mainWindow)
 
+    /**快捷键 */
+    registerShortcut(mainWindow)
     /**
      * 单实例模式
      */
@@ -121,33 +122,6 @@ app
     })
 
     return mainWindow
-  })
-  .then((mainWindow) => {
-    is.dev && mainWindow.webContents.openDevTools({ mode: 'detach' })
-
-    const tray = new Tray(icon)
-
-    const contextMenu = Menu.buildFromTemplate([
-      // {
-      //   label: '关于',
-      //   role: 'about'
-      // },
-      // { type: 'separator' },
-      {
-        label: '退出',
-        // role: 'quit',
-        click() {
-          isRealQuit = true
-          app.quit()
-        }
-      }
-    ])
-
-    tray.setContextMenu(contextMenu)
-
-    tray.addListener('click', () => {
-      mainWindow.show()
-    })
   })
 
   /**

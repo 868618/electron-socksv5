@@ -1,5 +1,5 @@
 {
-  "name": "socksv5",
+  "name": "学道代理",
   "version": "1.0.0",
   "description": "学道代理",
   "main": "./out/main/index.js",

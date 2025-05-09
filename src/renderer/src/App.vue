@@ -1,13 +1,11 @@
 <script setup lang="ts">
 // import Versions from './components/Versions.vue'
-import NetworkInterface from '@components/NetworkInterface.vue'
+import Panel from '@renderer/components/Panel.vue'
 import TitleBar from '@components/TitleBar.vue'
-
-// const ipcHandle = (): void => window.electron.ipcRenderer.send('ping')
 </script>
 
 <template>
-  <TitleBar></TitleBar>
+  <TitleBar />
 
-  <NetworkInterface />
+  <Panel />
 </template>
