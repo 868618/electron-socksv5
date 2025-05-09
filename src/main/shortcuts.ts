@@ -1,5 +1,5 @@
 import localshortcut from 'electron-localshortcut'
-import { BrowserWindow } from 'electron'
+import { BrowserWindow, app } from 'electron'
 
 /**
  * 创建本地快捷键
@@ -11,11 +11,16 @@ import { BrowserWindow } from 'electron'
  * - Ctrl+y 切换控制台
  */
 export const registerShortcut = (win: BrowserWindow) => {
-  localshortcut.register(win, ['Ctrl+W', 'Esc'], () => {
+  localshortcut.register(win, ['Ctrl+W'], () => {
     win.hide()
   })
 
   localshortcut.register(win, 'Ctrl+Y', () => {
     win.webContents.toggleDevTools()
+  })
+
+  localshortcut.register(win, 'Ctrl+Q', () => {
+    console.log('Ctrl+Q: ')
+    app.quit()
   })
 }

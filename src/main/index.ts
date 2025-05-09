@@ -83,10 +83,16 @@ app
       if (BrowserWindow.getAllWindows().length === 0) createWindow()
     })
 
+    // 监听应用级退出事件（快捷键触发）
+    app.on('before-quit', () => {
+      console.log('before-quit: ')
+      globalThis.isQuitting = true // 标记为应用退出
+    })
+
     mainWindow.on('close', (event) => {
       console.log('globalThis.VITE_PUB_IS_REAL_QUIT: ', globalThis.VITE_PUB_IS_REAL_QUIT)
 
-      !globalThis.VITE_PUB_IS_REAL_QUIT && event.preventDefault()
+      !globalThis.VITE_PUB_IS_REAL_QUIT && !globalThis.isQuitting && event.preventDefault()
 
       mainWindow.hide()
     })
