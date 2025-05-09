@@ -1,5 +1,5 @@
 appId: com.electron.app
-productName: socksv5
+productName: 学道代理
 directories:
   buildResources: build
 files:
@@ -12,9 +12,9 @@ files:
 asarUnpack:
   - resources/**
 win:
-  executableName: socksv5
+  executableName: 学道代理
 nsis:
-  artifactName: ${name}-${version}-setup.${ext}
+  artifactName: 学道代理-${version}-setup.${ext}
   shortcutName: ${productName}
   uninstallDisplayName: ${productName}
   createDesktopShortcut: always
@@ -27,7 +27,7 @@ mac:
     - NSDownloadsFolderUsageDescription: Application requests access to the user's Downloads folder.
   notarize: false
 dmg:
-  artifactName: ${name}-${version}.${ext}
+  artifactName: 学道代理-${version}.${ext}
 linux:
   target:
     - AppImage

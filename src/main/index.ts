@@ -1,6 +1,6 @@
 import { app, shell, BrowserWindow } from 'electron'
 import { join } from 'path'
-import { electronApp, optimizer, is, platform } from '@electron-toolkit/utils'
+import { electronApp, is, platform } from '@electron-toolkit/utils'
 import icon from '@resources/icon.png?asset'
 
 import { registerTray } from './tray'
@@ -66,9 +66,9 @@ app
     // Default open or close DevTools by F12 in development
     // and ignore CommandOrControl + R in production.
     // see https://github.com/alex8088/electron-toolkit/tree/master/packages/utils
-    app.on('browser-window-created', (_, window) => {
-      optimizer.watchWindowShortcuts(window, { zoom: true, escToCloseWindow: true })
-    })
+    // app.on('browser-window-created', (_, window) => {
+    //   optimizer.watchWindowShortcuts(window, { zoom: true, escToCloseWindow: true })
+    // })
 
     const mainWindow = createWindow()
 
