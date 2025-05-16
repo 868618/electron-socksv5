@@ -5,7 +5,12 @@ import socks from 'socksv5'
 import { ProxyServer } from '@src/ipc-events'
 import { detect } from 'detect-port'
 import getPort from 'get-port'
-import { dialog } from 'electron'
+import { Notification } from 'electron'
+
+import { platform } from '@electron-toolkit/utils'
+
+import win_icon from '@resources/icon.png?asset'
+import mac_icon from '@resources/mac_icon.png?asset'
 
 const ipc = new IpcListener<IpcEvents>()
 
@@ -78,9 +83,23 @@ ipc.handle('reloadProxyServer', async () => {
 })
 
 ipc.handle('alert', (_e, text: string) => {
-  dialog.showMessageBox({
-    title: '学道代理',
-    message: text,
-    type: 'info'
-  })
+  const isSupportedNotification = Notification.isSupported()
+  // console.log('isSupportedNotification: ', isSupportedNotification)
+
+  if (isSupportedNotification) {
+    const notification = new Notification({
+      title: '',
+      body: text,
+      icon: platform.isMacOS ? mac_icon : win_icon,
+      urgency: 'low'
+    })
+
+    notification.show()
+  }
+
+  // dialog.showMessageBox({
+  //   title: '学道代理',
+  //   message: text,
+  //   type: 'info'
+  // })
 })
