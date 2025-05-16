@@ -25,6 +25,7 @@
     "@electron-toolkit/typed-ipc": "^1.0.2",
     "@electron-toolkit/utils": "^4.0.0",
     "@iconify-json/line-md": "^1.2.7",
+    "@iconify-json/solar": "^1.2.2",
     "@iconify-json/subway": "^1.2.0",
     "detect-port": "^2.1.0",
     "electron-localshortcut": "^3.2.1",

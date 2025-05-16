@@ -9,15 +9,16 @@ import { registerShortcut } from './shortcuts'
 function createWindow(): BrowserWindow {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
-    width: 350,
+    width: 500,
     height: 100,
 
-    minWidth: 350,
+    minWidth: 500,
     // maxWidth: 350,
     minHeight: 100,
     show: false,
     autoHideMenuBar: true,
     ...(platform.isLinux ? { icon } : {}),
+
     webPreferences: {
       preload: join(__dirname, '../preload/index.js'),
       sandbox: false
@@ -25,9 +26,7 @@ function createWindow(): BrowserWindow {
 
     resizable: true,
 
-    // titleBarStyle: 'customButtonsOnHover'
     titleBarStyle: platform.isMacOS ? 'customButtonsOnHover' : 'hidden'
-    // titleBarStyle: 'hidden'
   })
 
   mainWindow.on('ready-to-show', () => {

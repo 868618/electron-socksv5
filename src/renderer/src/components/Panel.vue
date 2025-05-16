@@ -16,9 +16,16 @@
       <div
         v-for="item in list"
         :key="item.port"
-        class="text-green-300 underline underline-green-300 underline-offset-5 decoration-dotted grid select-text"
+        class="text-green-300 underline underline-green-300 underline-offset-5 decoration-dotted select-text text-nowrap"
       >
-        socks5://{{ item.name }}:{{ item.port }}
+        <section class="flex gap-x-2 items-center">
+          <div
+            class="i-solar:copy-bold text-[12px] cursor-pointer hover:opacity-30"
+            @click="copy(`socks5://${item.name}:${item.port}`)"
+          />
+
+          <div>socks5://{{ item.name }}:{{ item.port }}</div>
+        </section>
       </div>
     </div>
   </section>
@@ -53,4 +60,8 @@ watch(
     }
   }
 )
+
+const copy = (text: string) => {
+  navigator.clipboard.writeText(text)
+}
 </script>
