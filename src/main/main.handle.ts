@@ -77,7 +77,7 @@ ipc.handle('reloadProxyServer', async () => {
   return creareSocksV5ProxyServer()
 })
 
-ipc.handle('alert', (_e, text) => {
+ipc.handle('alert', (_e, text: string) => {
   dialog.showMessageBox({
     title: '学道代理',
     message: text,
