@@ -63,5 +63,7 @@ watch(
 
 const copy = (text: string) => {
   navigator.clipboard.writeText(text)
+
+  emitter.invoke('alert', '复制成功')
 }
 </script>

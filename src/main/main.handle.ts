@@ -5,6 +5,7 @@ import socks from 'socksv5'
 import { ProxyServer } from '@src/ipc-events'
 import { detect } from 'detect-port'
 import getPort from 'get-port'
+import { dialog } from 'electron'
 
 const ipc = new IpcListener<IpcEvents>()
 
@@ -74,4 +75,12 @@ ipc.handle('reloadProxyServer', async () => {
   proxyServerStore.length = 0
 
   return creareSocksV5ProxyServer()
+})
+
+ipc.handle('alert', (_e, text) => {
+  dialog.showMessageBox({
+    title: '学道代理',
+    message: text,
+    type: 'info'
+  })
 })

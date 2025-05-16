@@ -15,6 +15,8 @@ export type IpcEvents =
        * @returns
        */
       reloadProxyServer: () => ProxyServer[]
+
+      alert: () => void
     }
 
 //Renderer ipc events
