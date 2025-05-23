@@ -1,10 +1,17 @@
 /* @import './base.css'; */
 
 body {
-  overflow: hidden;
+  /* overflow: hidden;
   background-image: url('./wavy-lines.svg');
+  background-color: #141416;
+  background-size: cover; */
+  user-select: none;
+}
+
+.bg-def {
+  background-image: url('./wavy-lines.svg');
+  background-color: #141416;
   background-size: cover;
   user-select: none;
-  background-color: #141416;
 }
 

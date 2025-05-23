@@ -26,7 +26,11 @@ function createWindow(): BrowserWindow {
 
     resizable: true,
 
-    titleBarStyle: platform.isMacOS ? 'customButtonsOnHover' : 'hidden'
+    titleBarStyle: platform.isMacOS ? 'customButtonsOnHover' : 'hidden',
+
+    maximizable: false,
+
+    transparent: true
   })
 
   mainWindow.on('ready-to-show', () => {

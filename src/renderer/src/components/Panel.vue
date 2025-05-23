@@ -1,7 +1,7 @@
 <template>
-  <section class="flex h-screen w-screen items-center">
+  <section class="bg-def rounded-full flex h-screen w-screen items-center overflow-hidden drag">
     <div
-      class="text-[25px] text-green-200 mx-4 px-[10px] rounded-full inline-flex gap-x-2 h-[40px] select-none items-center justify-center"
+      class="text-[25px] text-green-200 mx-4 px-[10px] rounded-full inline-flex gap-x-2 h-[40px] select-none items-center justify-center no-drag"
       :class="{ 'cursor-pointer': !list.length }"
       @click="handleClick"
     >
@@ -18,13 +18,13 @@
         :key="item.port"
         class="text-green-300 underline underline-green-300 underline-offset-5 decoration-dotted select-text text-nowrap"
       >
-        <section class="flex gap-x-2 items-center">
+        <section class="flex gap-x-2 items-center *:no-drag">
           <div
             class="i-solar:copy-bold text-[12px] cursor-pointer hover:opacity-30"
             @click="copy(`socks5://${item.name}:${item.port}`)"
           />
 
-          <div>socks5://{{ item.name }}:{{ item.port }}</div>
+          <div class="inline-block">socks5://{{ item.name }}:{{ item.port }}</div>
         </section>
       </div>
     </div>

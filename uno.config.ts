@@ -10,5 +10,13 @@ export default defineConfig({
     presetWind4({
       reset: true
     })
+  ],
+
+  rules: [
+    ['red', { background: 'red' }],
+
+    ['drag', { 'app-region': 'drag' }],
+
+    ['no-drag', { 'app-region': 'no-drag' }]
   ]
 })
